@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_open_account"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/graywhite"
+    tools:context="com.example.yannis.dianming.activity.OpenAccountActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/back"
+            android:text="@string/back"
+            android:textSize="14sp"
+            android:textColor="@drawable/maincolor_selector"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_sub_account"
+            android:id="@+id/title"
+            android:textSize="18sp"
+            android:textColor="@color/maincolor"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="14sp"
+        android:textColor="@color/lightblack"
+        android:text="@string/username"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:background="@drawable/editview"
+        android:layout_margin="6dp"
+        android:hint="请设置用户名"
+        android:padding="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="14sp"
+        android:textColor="@color/lightblack"
+        android:text="@string/password"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password"
+        android:background="@drawable/editview"
+        android:layout_margin="6dp"
+        android:hint="请设置密码"
+        android:padding="10dp"
+        android:inputType="textPassword"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="14sp"
+        android:textColor="@color/lightblack"
+        android:text="备注"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notice"
+        android:background="@drawable/editview"
+        android:layout_margin="6dp"
+        android:hint="请设置备注"
+        android:padding="10dp"
+        android:textSize="16sp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:background="@drawable/login_btn_selector"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/url"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:text="www.baidu.com"
+        android:textSize="14sp"
+        android:autoLink="all"
+        android:visibility="gone"
+        android:textColor="@color/link"/>
+
+</LinearLayout>

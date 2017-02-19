@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:topbar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_sign"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graywhite"
+    tools:context="com.example.yannis.dianming.activity.SignActivity">
+
+    <com.example.yannis.dianming.widget.Topbar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        topbar:leftMargin="10dp"
+        topbar:leftSize="8sp"
+        topbar:leftText="@string/back"
+        topbar:rightMargin1="20dp"
+        topbar:rightMargin2="10dp"
+        topbar:rightSize="8sp"
+        topbar:rightText1="@string/rollcall"
+        topbar:rightText2="@string/history_records"
+        topbar:textColor="@drawable/maincolor_selector">
+    </com.example.yannis.dianming.widget.Topbar>
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topbar">
+
+        <TextView
+            android:id="@+id/courseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="课程名"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/courseName"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="8dp"
+            android:text="2017-01-11"
+            android:textColor="@color/lightblack"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/recommendTv"
+    android:layout_below="@+id/title"
+    android:text="@string/recommands"
+    android:paddingLeft="4dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="4dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/recommendTv"
+        android:background="@color/graywhite"
+        android:id="@+id/view1"/>
+
+    <com.example.yannis.dianming.widget.swipemenulistview.SwipeMenuListView
+        android:id="@+id/recommendListview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recommendTv"
+        android:background="@color/white">
+    </com.example.yannis.dianming.widget.swipemenulistview.SwipeMenuListView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/commomTv"
+        android:layout_below="@+id/recommendListview"
+        android:text="@string/normal"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="4dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/commomTv"
+        android:background="@color/graywhite"/>
+
+    <com.example.yannis.dianming.widget.swipemenulistview.SwipeMenuListView
+        android:id="@+id/commomListview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:background="@color/white">
+    </com.example.yannis.dianming.widget.swipemenulistview.SwipeMenuListView>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/circle_selector"
+        android:text="@string/submit"
+        android:textColor="@color/white"/>
+
+
+</RelativeLayout>

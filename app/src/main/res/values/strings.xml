@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">杭电快点</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="choose_class">选择班级</string>
+    <string name="choose_student">选择学生</string>
+    <string name="cancel">取消</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="back">返回</string>
+    <string name="rollcall">课堂点名</string>
+    <string name="logout">注销</string>
+    <string name="search">搜索</string>
+    <string name="call">点名</string>
+    <string name="detail">详情</string>
+    <string name="recall">补签</string>
+    <string name="resign">再次点名</string>
+    <string name="submit">提交</string>
+    <string name="work">作业</string>
+    <string name="check">考勤</string>
+    <string name="last_page">上一页</string>
+    <string name="next_page">下一页</string>
+    <string name="unsigned_times">缺勤次数</string>
+    <string name="unchecked">缺席</string>
+    <string name="be_late">迟到</string>
+    <string name="askforleave">请假</string>
+    <string name="checked">已到</string>
+    <string name="setting">设置</string>
+    <string name="private_settings">个人设置</string>
+    <string name="analysis">统计信息</string>
+    <string name="history_records">历史记录</string>
+    <string name="no_course">无课程</string>
+    <string name="choose_course">选择课程</string>
+    <string name="choose_week">请选择需要查询的周数</string>
+    <string name="abcent_punish">缺勤扣除: </string>
+    <string name="add">+</string>
+    <string name="recommands">系统推荐点名</string>
+    <string name="normal">常规点名</string>
+    <string name="elses">其他</string>
+    <string name="open">开通</string>
+    <string name="delete">删除</string>
+    <string name="remark">备注</string>
+    <string name="open_sub_account">开通子账号</string>
+    <string name="msg_notification">消息通知</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="function_settings">功能设置</string>
+    <string name="about">关于我们</string>
+    <string name="support">支持</string>
+    <string name="share">分享</string>
+    <string name="mark">评分</string>
+    <string name="set_percent">设置统计百分比</string>
+    <string name="set_input">成绩输入设置</string>
+    <string name="my_class">我的班级</string>
+    <string name="assistant_func">辅导员选项</string>
+    <string name="sub_account">子账号</string>
+    <string name="ianswer">IAnswer</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="evening">晚上</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_sign">SignActivity</string>
+    <string name="title_activity_statistic">StatisticActivity</string>
+    <string name="title_activity_add_account">AddAccountActivity</string>
+    <string name="title_activity_sign_detail">SignDetailActivity</string>
+    <string name="check_analysis">考勤统计</string>
+    <string name="ordinary_work">平时作业</string>
+    <string name="title_activity_set_percent">SetPercentActivity</string>
+    <string name="title_activity_sign_list">SignListActivity</string>
+    <string name="title_activity_assistant">AssistantActivity</string>
+
+    <array name="weekdays">
+        <item>一@0</item>
+        <item>二@1</item>
+        <item>三@2</item>
+        <item>四@3</item>
+        <item>五@4</item>
+        <item>六@5</item>
+        <item>日@6</item>
+    </array>
+
+    <array name="sign_status">
+        <item>已到</item>
+        <item>迟到</item>
+        <item>请假</item>
+        <item>缺席</item>
+    </array>
+
+</resources>

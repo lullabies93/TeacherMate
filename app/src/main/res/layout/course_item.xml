@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="高数"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"
+        android:paddingTop="4dp"/>
+
+    <TextView
+        android:id="@+id/course_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/course_name"
+        android:layout_alignLeft="@+id/course_name"
+        android:text="周一3到5节"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/course_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/view"
+        android:layout_alignBaseline="@+id/course_time"
+        android:textSize="14sp"
+        android:text="三教218"
+        android:textColor="@color/lightblack"
+        android:padding="4dp"/>
+
+</RelativeLayout>

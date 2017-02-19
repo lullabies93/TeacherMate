@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:topbar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_top_bar_test"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yannis.dianming.test.TopBarTest">
+    <com.example.yannis.dianming.widget.Topbar
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        topbar:leftText="@string/back"
+        topbar:rightText1="@string/rollcall"
+        topbar:rightText2="@string/history_records"
+        topbar:leftMargin="10dp"
+        topbar:rightMargin1="20dp"
+        topbar:rightMargin2="10dp"
+        topbar:leftSize="8sp"
+        topbar:rightSize="8sp"
+        topbar:textColor="@drawable/maincolor_selector">
+    </com.example.yannis.dianming.widget.Topbar>
+
+</RelativeLayout>
