@@ -3,6 +3,8 @@
           package="com.example.yannis.dianming">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name=".base.MyApplication"
@@ -11,6 +13,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Dianming.db"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="3"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58a6d0a5aed1793d640018e8">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="13ab3423ca811d197a87d2da75df331a">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Dianming">
+        </meta-data>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,12 +57,33 @@
         </activity>
         <activity android:name=".activity.OpenAccountActivity">
         </activity>
-        <activity android:name=".activity.SetPercentActivity">
+        <activity android:name=".activity.SetPercentActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
         <activity android:name=".activity.ClassActivity">
         </activity>
         <activity android:name=".activity.InputSettingActivity">
         </activity>
+        <activity android:name=".activity.InputGradeActivity">
+        </activity>
+        <activity android:name=".test.TestHomeAty">
+        </activity>
+        <activity android:name=".activity.StudentActivity">
+        </activity>
+        <activity android:name=".activity.StudentDetailActivity">
+        </activity>
+        <activity
+            android:name=".activity.TroubleStudentsActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".activity.CourseActivity">
+        </activity>
+        <activity android:name=".activity.RefreshActivity">
+        </activity>
+        <activity android:name=".activity.AboutActivity">
+        </activity>
+
+
     </application>
 
 </manifest>

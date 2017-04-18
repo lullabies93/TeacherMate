@@ -10,12 +10,8 @@ import android.widget.TextView;
 
 import com.example.yannis.dianming.R;
 import com.example.yannis.dianming.activity.HomeworkActivity;
-import com.example.yannis.dianming.base.APIs;
-import com.example.yannis.dianming.base.BaseViewHolder;
-import com.example.yannis.dianming.base.CustomAdapter;
-import com.example.yannis.dianming.base.Util;
+import com.example.yannis.dianming.base.ConstantValues;
 import com.example.yannis.dianming.bean.Course;
-import com.example.yannis.dianming.bean.Record;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,51 +67,10 @@ public class HomeworkAdapter extends BaseAdapter {
             places = places+string+"/";
         }
         holder.coursePlace.setText(places.substring(0, places.length()-1));
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, HomeworkActivity.class);
-                intent.putExtra(APIs.courseInfo, course);
-                context.startActivity(intent);
-            }
-        });
         return convertView;
     }
 
     class ViewHolder{
         TextView courseName, coursePlace;
     }
-//    public HomeworkAdapter(List<Course> datas, Context context, int layoutID) {
-//        super(datas, context, layoutID);
-//        courses = datas;
-//        this.context = context;
-//        builder = new StringBuilder();
-//    }
-//
-//    @Override
-//    public void refresh(List<Course> mDatas) {
-//        courses = mDatas;
-//        notifyDataSetChanged();
-//    }
-//
-//    @Override
-//    public void convertView(BaseViewHolder holder, final Course item) {
-//        Util.logHelper("get convertview");
-//        holder.setText(R.id.courseName, item.getCourse_name());
-//        classrooms = item.getClassroom();
-////        builder.delete(0, builder.length());
-////        for (String string : classrooms){
-////            builder.append(string+"/");
-////        }
-//
-////        holder.setText(R.id.coursePlace, builder.substring(0, builder.length()-1));
-////        holder.getConvertView().setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v) {
-////                Intent intent = new Intent(context, HomeworkActivity.class);
-////                intent.putExtra(APIs.courseInfo, item);
-////                context.startActivity(intent);
-////            }
-////        });
-//    }
 }

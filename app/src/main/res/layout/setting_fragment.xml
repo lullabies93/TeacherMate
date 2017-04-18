@@ -1,236 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:background="@color/graywhite">
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/graywhite">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="8dp"
             android:text="个人信息"
-            android:textSize="14dp"
-            android:layout_marginTop="20dp"
             android:textColor="@color/lightblack"
-            android:paddingLeft="8dp"/>
+            android:textSize="14dp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
             android:id="@+id/teacherInfo"
-            android:layout_marginTop="10dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@mipmap/acount"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
+                android:src="@mipmap/acount"/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/teacherName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
                 android:text="教师姓名"
-                android:textSize="16sp"
-                android:padding="10dp"/>
+                android:textSize="16sp"/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
                 android:text="注销"
-                android:textColor="@drawable/maincolor_selector"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
+                android:textColor="@drawable/maincolor_selector"/>
+
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="8dp"
             android:text="@string/function_settings"
-            android:textSize="14dp"
-            android:layout_marginTop="20dp"
             android:textColor="@color/lightblack"
-            android:paddingLeft="8dp"/>
+            android:textSize="14dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
+        <com.example.yannis.dianming.widget.SettingBar
             android:id="@+id/setPercent"
-            android:layout_marginTop="8dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/per"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/set_percent"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/dark_back"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
-        </LinearLayout>
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
-            android:id="@+id/inputSet"
-            android:layout_marginTop="2dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/score"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/set_input"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/dark_back"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/score"
+            custom:text="@string/set_percent"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back">
+        </com.example.yannis.dianming.widget.SettingBar>
+
+        <com.example.yannis.dianming.widget.SettingBar
             android:id="@+id/openAccount"
-            android:layout_marginTop="2dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/assistant"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/open_sub_account"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/dark_back"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
-        </LinearLayout>
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/assistant"
+            custom:text="@string/open_sub_account"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back">
+        </com.example.yannis.dianming.widget.SettingBar>
+
+
+        <com.example.yannis.dianming.widget.SettingBar
             android:id="@+id/myClass"
-            android:layout_marginTop="2dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/classroom"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/my_class"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/dark_back"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
-        </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/classroom"
+            custom:text="@string/my_class"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back">
+        </com.example.yannis.dianming.widget.SettingBar>
+
+        <com.example.yannis.dianming.widget.SettingBar
+            android:id="@+id/refreshData"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/score"
+            custom:text="数据刷新"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back">
+        </com.example.yannis.dianming.widget.SettingBar>
+
+        <com.example.yannis.dianming.widget.SettingBar
+            android:id="@+id/inputSet"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/score"
+            custom:text="推送内容"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back"></com.example.yannis.dianming.widget.SettingBar>
+
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/support"
-            android:textSize="14dp"
             android:layout_marginTop="20dp"
+            android:paddingLeft="8dp"
+            android:text="@string/support"
             android:textColor="@color/lightblack"
-            android:paddingLeft="8dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
+            android:textSize="14dp"/>
+
+        <com.example.yannis.dianming.widget.SettingBar
             android:id="@+id/mark"
-            android:layout_marginTop="8dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/mark"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/mark"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/dark_back"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
-        </LinearLayout>
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/mark"
+            custom:text="@string/mark"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back">
+
+        </com.example.yannis.dianming.widget.SettingBar>
+
+        <com.example.yannis.dianming.widget.SettingBar
             android:id="@+id/aboutUs"
-            android:layout_marginTop="2dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/aboutus"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/about"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/dark_back"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="8dp"/>
-        </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
+            custom:logo="@mipmap/aboutus"
+            custom:text="@string/about"
+            custom:textSize="16sp"
+            custom:textColor="@color/lightblack"
+            custom:marginLeft="10dp"
+            custom:marginRight="8dp"
+            custom:imageSize="20dp"
+            custom:arrow="@mipmap/dark_back">
+
+        </com.example.yannis.dianming.widget.SettingBar>
+
     </LinearLayout>
-
-
 
 
 </ScrollView>

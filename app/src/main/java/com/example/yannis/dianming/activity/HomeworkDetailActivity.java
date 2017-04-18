@@ -1,20 +1,25 @@
 package com.example.yannis.dianming.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.yannis.dianming.R;
 import com.example.yannis.dianming.adapter.GradeAdapter;
-import com.example.yannis.dianming.base.APIs;
+import com.example.yannis.dianming.base.ConstantValues;
 import com.example.yannis.dianming.base.BaseActivity;
+import com.example.yannis.dianming.base.DialogListener;
+import com.example.yannis.dianming.base.ShowDialogUtil;
 import com.example.yannis.dianming.base.Util;
 import com.example.yannis.dianming.bean.HomeworkGrade;
 import com.example.yannis.dianming.bean.HomeworkRecord;
@@ -27,8 +32,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class HomeworkDetailActivity extends BaseActivity {
@@ -41,6 +47,9 @@ public class HomeworkDetailActivity extends BaseActivity {
     ListView gradeListview;
     @InjectView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @InjectView(R.id.sort)
+    TextView sort;
+
     private HomeworkRecord homeworkRecord;
     private ArrayList<HomeworkGrade> homeworkGrades;
     private GradeAdapter gradeAdapter;
@@ -54,7 +63,7 @@ public class HomeworkDetailActivity extends BaseActivity {
     @Override
     public void initData(Bundle bundle) {
         activity = this;
-        homeworkRecord = (HomeworkRecord) getIntent().getSerializableExtra(APIs.homeworkItem);
+        homeworkRecord = (HomeworkRecord) getIntent().getSerializableExtra(ConstantValues.homeworkItem);
         homeworkGrades = new ArrayList<>();
         gradeAdapter = new GradeAdapter(homeworkGrades, activity);
     }
@@ -82,39 +91,49 @@ public class HomeworkDetailActivity extends BaseActivity {
                 showDialog(grade);
             }
         });
+        sort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sortGrades();
+            }
+        });
+    }
+
+    private void sortGrades() {
+        Collections.sort(homeworkGrades, new Comparator<HomeworkGrade>() {
+            @Override
+            public int compare(HomeworkGrade lhs, HomeworkGrade rhs) {
+                //按照学生的年龄进行升序排列
+                if (lhs.getScore() < rhs.getScore()) {
+                    return 1;
+                }
+                if (lhs.getScore() == rhs.getScore()) {
+                    return 0;
+                }
+                return -1;
+            }
+        });
+        gradeAdapter.gradeArrayList = homeworkGrades;
+        gradeAdapter.notifyDataSetChanged();
     }
 
     private void showDialog(final HomeworkGrade grade) {
-        View dialog = getLayoutInflater().inflate(R.layout.dialog, null);
-        final EditText editText = (EditText) dialog.findViewById(R.id.et);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText.setText(String.valueOf(grade.getScore()));
-        TextView textView = (TextView) dialog.findViewById(R.id.tv);
-        textView.setText(grade.getStudent_name() + " : ");
-        AlertDialog.Builder builder = new AlertDialog.Builder
-                (activity);
-        builder.setTitle("修改成绩");
-        builder.setMessage(null);
-        builder.setView(dialog);
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        ShowDialogUtil.showModifyGradeDialog(activity, grade.getStudent_name(), grade.getScore(), new
+                DialogListener<String>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            public void onDialogClick(String ret) {
+                changeGrade(grade.getGrade_id(), ret);
             }
         });
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                changeGrade(grade.getGrade_id(), editText.getText().toString());
-            }
-        });
-        builder.show();
     }
 
     @Override
     public void loadData() {
-        CommonRequest.createGetRequest(APIs.GET_HOMEWORK_GRADES + "?" + APIs.homeworkRecordId + "=" +
+        if (!swipeRefreshLayout.isRefreshing()) {
+            showDialog();
+        }
+        CommonRequest.createGetRequest(ConstantValues.GET_HOMEWORK_GRADES + "?" + ConstantValues
+                .homeworkRecordId + "=" +
                 homeworkRecord.getHomework_record_id(), null, new CommomHandler(new CommomListener() {
 
 
@@ -123,36 +142,53 @@ public class HomeworkDetailActivity extends BaseActivity {
                 if (object instanceof ArrayList) {
                     homeworkGrades = (ArrayList<HomeworkGrade>) object;
                     refreshListview();
+                } else {
+                    Util.showToast(activity, "data error");
                 }
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                dismissDialog();
             }
 
             @Override
             public void onFailure(Object object) {
-
+                Util.showToast(activity, object.toString());
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                dismissDialog();
             }
         }, HomeworkGrade.class));
+
     }
 
     private void refreshListview() {
-        if (swipeRefreshLayout.isRefreshing()){
-            swipeRefreshLayout.setRefreshing(false);
-        }
+
         gradeAdapter.gradeArrayList = homeworkGrades;
         gradeAdapter.notifyDataSetChanged();
+        if (homeworkGrades.size() == 0) {
+            Util.showToast(activity, "作业记录为空");
+        }
     }
 
 
     private void changeGrade(int id, String newgrade) {
+        if (Integer.parseInt(newgrade) > 100) {
+            Util.showToast(activity, "不得超过100分");
+            return;
+        }
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
-            jsonObject.put(APIs.gradeId, id);
-            jsonObject.put(APIs.score, Integer.parseInt(newgrade));
+            jsonObject.put(ConstantValues.gradeId, id);
+            jsonObject.put(ConstantValues.score, Integer.parseInt(newgrade));
             array.put(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        CommonRequest.createPutRequest(APIs.GET_HOMEWORK_GRADES, array.toString(), new CommomHandler(new CommomListener() {
+        CommonRequest.createPutRequest(ConstantValues.GET_HOMEWORK_GRADES, array.toString(), new
+                CommomHandler(new CommomListener() {
 
 
             @Override
@@ -160,7 +196,7 @@ public class HomeworkDetailActivity extends BaseActivity {
                 if (object instanceof String) {
                     try {
                         JSONObject ret = new JSONObject(String.valueOf(object));
-                        if (ret.getInt(APIs.status) == 1) {
+                        if (ret.getInt(ConstantValues.status) == 1) {
                             loadData();
                             Util.showToast(activity, "修改成功");
                         } else {
@@ -175,7 +211,6 @@ public class HomeworkDetailActivity extends BaseActivity {
             @Override
             public void onFailure(Object object) {
                 Util.showToast(activity, "修改失败");
-
             }
         }));
     }

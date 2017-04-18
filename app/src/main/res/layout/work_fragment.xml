@@ -5,13 +5,20 @@
               android:background="@color/graywhite"
               android:orientation="vertical">
 
+        <ImageButton
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/white_btn_selector"
+            android:src="@mipmap/refresh"
+            android:visibility="gone"/>
 
-    <ListView
-        android:id="@+id/workListview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/white"></ListView>
-
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/listview">
+        </ListView>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.yannis.dianming.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.widget.FrameLayout;
@@ -8,9 +9,10 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.example.yannis.dianming.R;
-import com.example.yannis.dianming.base.APIs;
+import com.example.yannis.dianming.base.ConstantValues;
 import com.example.yannis.dianming.base.BaseActivity;
 import com.example.yannis.dianming.base.MyApplication;
+import com.example.yannis.dianming.base.SPUtils;
 import com.example.yannis.dianming.base.Util;
 import com.example.yannis.dianming.fragments.SettingFragment;
 import com.example.yannis.dianming.fragments.SignFragment;
@@ -19,13 +21,14 @@ import com.example.yannis.dianming.network.CommomHandler;
 import com.example.yannis.dianming.network.CommomListener;
 import com.example.yannis.dianming.network.CommonRequest;
 import com.example.yannis.dianming.widget.TabItem;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class HomeActivity extends BaseActivity {
@@ -40,6 +43,8 @@ public class HomeActivity extends BaseActivity {
     TextView title;
     private ArrayList<TabItem> tabItems;
     private MyApplication myApplication;
+    private HomeActivity activity;
+    private PushAgent pushAgent;
 
     @Override
     public int getLayoutID() {
@@ -92,6 +97,7 @@ public class HomeActivity extends BaseActivity {
                 WorkFragment.class));
         tabItems.add(new TabItem(this, R.mipmap.setting_copy, R.mipmap.setting, R.string.setting,
                 SettingFragment.class));
+
     }
 
     @Override
@@ -100,14 +106,15 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void getWeek() {
-        CommonRequest.createGetRequest(APIs.GET_WEEK, null, new CommomHandler(new CommomListener() {
+        CommonRequest.createGetRequest(ConstantValues.GET_WEEK, null, new CommomHandler(new CommomListener() {
             @Override
             public void onSuccess(Object object) {
                 String ret = String.valueOf(object);
                 try {
                     JSONObject jsonObject = new JSONObject(ret);
-                    if (jsonObject.getInt("status")==1){
+                    if (jsonObject.getInt("status") == 1) {
                         int week = jsonObject.getInt("week");
+
                         myApplication.setWeek(week);
                     }
                 } catch (JSONException e) {
@@ -126,5 +133,23 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void initData(Bundle bundle) {
         myApplication = (MyApplication) getApplication();
+        activity = this;
+//        pushAgent = PushAgent.getInstance(this);
+//        pushAgent.addAlias(String.valueOf(myApplication.getTeacher_id()), ConstantValues.teacherID, new UTrack.ICallBack() {
+//
+//
+//            @Override
+//            public void onMessage(boolean b, String s) {
+//                Util.logHelper(String.valueOf(b)+":"+s);
+//            }
+//        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (myApplication.getTeacher_id()==0){
+            myApplication.appExit();
+        }
     }
 }

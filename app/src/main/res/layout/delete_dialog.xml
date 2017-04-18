@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/dialog_background">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="确定删除此考核项?"
+        style="@style/dialog_title"/>
+
+    <View
+        android:id="@+id/view"
+        style="@style/dialog_view"
+        android:layout_below="@id/title"/>
+
+    <TextView
+        android:id="@+id/msgTv"
+        style="@style/dialog_tv"
+        android:text="message"
+        android:padding="16dp"
+        android:layout_below="@+id/view"/>
+
+    <View
+        android:id="@+id/view1"
+        style="@style/dialog_view"
+        android:layout_below="@+id/msgTv"/>
+
+    <TextView
+        android:id="@+id/ok"
+        style="@style/dialog_ok"
+        android:layout_below="@+id/view1"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        style="@style/dialog_cancel"
+        android:layout_below="@+id/view1"
+        android:layout_toLeftOf="@+id/ok"/>
+
+</RelativeLayout>

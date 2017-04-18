@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/dialog"
+                style="@style/dialog_background">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="创建考核项"
+        style="@style/dialog_title"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/title"
+        style="@style/dialog_view"/>
+
+    <LinearLayout
+        android:id="@+id/nameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="作业名字:"
+            android:textColor="@color/maincolor"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/homeworkNameEt"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/editview"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textColor="@color/maincolor_checked"
+            android:textColorHint="@color/maincolor"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/gradeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nameLayout"
+        android:layout_below="@+id/nameLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="默认分数:"
+            android:textColor="@color/maincolor"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/defaultGrade"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/center"
+            android:background="@drawable/editview"
+            android:gravity="center"
+            android:hint="80"
+            android:inputType="number"
+            android:padding="6dp"
+            android:textColor="@color/maincolor_checked"
+            android:textColorHint="@color/maincolor"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+
+    <RadioGroup
+        android:id="@+id/typeGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gradeLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"></RadioGroup>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@+id/typeGroup"
+        style="@style/dialog_view"/>
+
+    <TextView
+        android:id="@+id/ok"
+        style="@style/dialog_ok"
+        android:layout_below="@+id/view1"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        style="@style/dialog_cancel"
+        android:layout_below="@+id/view1"
+        android:layout_toLeftOf="@+id/ok"/>
+
+</RelativeLayout>

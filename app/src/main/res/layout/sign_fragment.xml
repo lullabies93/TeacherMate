@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:clickable="true"
-    android:layout_height="match_parent">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true"
+              android:background="@color/graywhite"
+              android:orientation="vertical">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/white"
-        app:tabMode="fixed"
-        app:tabTextColor="@color/lightblack"
         app:tabIndicatorColor="@color/maincolor_checked"
-        app:tabSelectedTextColor="@color/maincolor"/>
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/maincolor"
+        app:tabTextColor="@color/lightblack"/>
 
-    <android.support.v4.view.ViewPager
+    <ImageButton
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/viewPager"></android.support.v4.view.ViewPager>
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/white_btn_selector"
+        android:src="@mipmap/refresh"
+        android:visibility="gone"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
 </LinearLayout>

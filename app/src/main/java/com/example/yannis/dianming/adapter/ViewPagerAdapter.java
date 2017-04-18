@@ -3,14 +3,12 @@ package com.example.yannis.dianming.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yannis.dianming.base.BaseFragment;
 import com.example.yannis.dianming.bean.Course;
 import com.example.yannis.dianming.bean.Course2;
 import com.example.yannis.dianming.fragments.CourseFragment;
-import com.example.yannis.dianming.fragments.SignDetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +52,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             List<String> classroom = course.getClassroom();
             for (int w = 0; w < weekdays.size(); w++) {
                 int day = Integer.parseInt(weekdays.get(w));
-                course2 = new Course2(sections.get(w), classroom.get(w), day, course.getCourse_id(), course
-                        .getCourse_name());
+                course2 = new Course2(classroom.get(w), course.getAbsences_deduce_point(), course
+                        .getVacates_deduce_point(), course.getLates_deduce_point(), course.getCourse_number
+                        (), course.getAttendances_percent_of_total_grade(), course.getCourse_name(), course
+                        .getCourse_id(), Integer.parseInt(weekdays.get(w)), sections.get(w));
                 switch (day) {
                     case 0:
 
@@ -131,7 +131,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment)super.instantiateItem(container,position);
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
         fragmentManager.beginTransaction().show(fragment).commit();
         return fragment;
     }

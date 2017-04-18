@@ -8,37 +8,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.example.yannis.dianming.activity.SignDetailActivity">
 
     <com.example.yannis.dianming.widget.Topbar
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:id="@+id/topbar"
         topbar:leftText="@string/back"
-        topbar:rightText1="@string/rollcall"
+        topbar:rightText1="补课点名"
         topbar:rightText2="@string/history_records"
         topbar:leftMargin="10dp"
         topbar:rightMargin1="20dp"
         topbar:rightMargin2="10dp"
-        topbar:leftSize="8sp"
-        topbar:rightSize="8sp"
+        topbar:leftSize="14sp"
+        topbar:rightSize="14sp"
         topbar:textColor="@drawable/maincolor_selector">
     </com.example.yannis.dianming.widget.Topbar>
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/course_name"
-        android:background="@color/graywhite"
-        android:text="课程名"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:padding="12dp"/>
+        android:background="@color/graywhite">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/course_name"
+            android:layout_centerHorizontal="true"
+            android:text="课程名"
+            android:textSize="18sp"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/desc"
+            android:text="备注"
+            android:textSize="14sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/course_name"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="2dp"/>
+    </RelativeLayout>
+
+
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp">
     </com.github.mikephil.charting.charts.PieChart>
@@ -52,7 +70,6 @@
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/white"
         app:tabMode="fixed"
         android:id="@+id/tabs"
         app:tabTextColor="@color/lightblack"

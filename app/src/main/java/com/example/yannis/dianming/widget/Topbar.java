@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,9 +70,9 @@ public class Topbar extends RelativeLayout {
         leftTv.setTextColor(textColor);
         rightTv1.setTextColor(textColor);
         rightTv2.setTextColor(textColor);
-        leftTv.setTextSize(leftSize);
-        rightTv1.setTextSize(rightSize);
-        rightTv2.setTextSize(rightSize);
+        leftTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, leftSize);
+        rightTv1.setTextSize(TypedValue.COMPLEX_UNIT_PX, rightSize);
+        rightTv2.setTextSize(TypedValue.COMPLEX_UNIT_PX, rightSize);
         leftParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         rightParams1 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         rightParams2 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -79,6 +80,7 @@ public class Topbar extends RelativeLayout {
         leftParams.addRule(CENTER_VERTICAL, TRUE);
         leftParams.leftMargin = (int)leftMargin;
         addView(leftTv, leftParams);
+
         rightParams2.addRule(ALIGN_PARENT_RIGHT, TRUE);
         rightParams2.addRule(CENTER_VERTICAL, TRUE);
         rightParams2.rightMargin = (int)rightMargin2;

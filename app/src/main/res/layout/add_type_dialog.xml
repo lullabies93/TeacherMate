@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/dialog_background">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/dialog_title"
+        android:text="新建考核类型"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/title"
+        style="@style/dialog_view"/>
+
+    <RelativeLayout
+        android:id="@+id/etView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="12dp">
+
+        <TextView
+            android:id="@+id/typeNameTv"
+            android:text="类型名: "
+            style="@style/dialog_tv"/>
+
+        <EditText
+            android:id="@+id/typeNameEt"
+            android:layout_width="80dp"
+            android:layout_alignBaseline="@+id/typeNameTv"
+            android:layout_toRightOf="@+id/typeNameTv"
+            android:hint="新类型"
+            style="@style/dialog_et"/>
+
+        <TextView
+            android:id="@+id/percentTv"
+            android:layout_below="@+id/typeNameTv"
+            android:text="百分比: "
+            style="@style/dialog_tv"/>
+
+        <EditText
+            android:id="@+id/percentEt"
+            android:layout_width="80dp"
+            android:layout_alignBaseline="@+id/percentTv"
+            android:layout_toRightOf="@+id/percentTv"
+            android:inputType="number"
+            android:text="20"
+            style="@style/dialog_et"/>
+
+        <TextView
+            android:id="@+id/maxPercent"
+            android:layout_below="@+id/percentTv"
+            android:text="最大可设置百分比为"
+            style="@style/dialog_tv"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@+id/etView"
+        style="@style/dialog_view"/>
+
+    <TextView
+        android:id="@+id/ok"
+        android:layout_below="@+id/view1"
+        style="@style/dialog_ok"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_below="@+id/view1"
+        android:layout_marginTop="4dp"
+        android:layout_toLeftOf="@+id/ok"
+        style="@style/dialog_cancel"/>
+
+</RelativeLayout>

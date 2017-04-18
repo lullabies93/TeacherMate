@@ -1,5 +1,6 @@
 package com.example.yannis.dianming.network;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -40,23 +41,21 @@ public class CommomCallback implements Callback {
         uiHandler = new Handler(Looper.getMainLooper());
     }
 
+
     private void handleResult(String result) {
-        if (result == null || result.equals("")){
-            listener.onFailure("network error");
+        if (result == null || result.equals("")) {
+            listener.onFailure("返回错误");
             return;
         }
-
-        //Util.logHelper("handle::"+result);
-
         try {
 
             JSONObject jsonObject = new JSONObject(result);
-            if (clazz == null ){
+            if (clazz == null) {
                 listener.onSuccess(result);
-            }else if (jsonObject.getInt("status")==1 && jsonObject.has("items")){
+            } else if (jsonObject.getInt("status") == 1 && jsonObject.has("items")) {
                 listener.onSuccess(GsonToList(jsonObject.getJSONArray("items").toString(), clazz));
 
-            }else{
+            } else {
                 listener.onSuccess(result);
             }
         } catch (JSONException e) {
@@ -70,15 +69,9 @@ public class CommomCallback implements Callback {
         Gson gson = new Gson();
         //Util.logHelper("json::"+gsonString);
         JsonArray array = new JsonParser().parse(gsonString).getAsJsonArray();
-        for(final JsonElement elem : array){
+        for (final JsonElement elem : array) {
             list.add(new Gson().fromJson(elem, cls));
         }
-
-//        if (gson != null) {
-//            list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
-//            }.getType());
-//        }
-       // Util.logHelper("list::"+list.size());
         return list;
     }
 
@@ -87,20 +80,33 @@ public class CommomCallback implements Callback {
         uiHandler.post(new Runnable() {
             @Override
             public void run() {
-                listener.onFailure(e.getMessage());
+                String error = e.getMessage();
+                if (error.startsWith("Failed to connect to")){
+                    error = "网络错误";
+                }
+                listener.onFailure(error);
             }
         });
     }
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
-        final String ret = response.body().string();
-        uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
+        if (response.isSuccessful()){
+            final String ret = response.body().string();
+            uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    handleResult(ret);
+                }
+            });
+        }else {//重新登录
+            uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onFailure("请求失败");
+                }
+            });
+        }
 
-                handleResult(ret);
-            }
-        });
     }
 }

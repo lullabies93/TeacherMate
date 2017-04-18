@@ -6,19 +6,20 @@ public class Student implements Serializable{
 
 
 	/**
-	 * class_number : 12052316
-	 * major_number : 0523
-	 * student_name : 赵健
-	 * student_number : 12062136
-	 * student_id : 1
+	 * student_id : 839
+	 * class_number : 15123911
+	 * student_number : 14120103
+	 * major : 编辑出版学
+	 * student_name : 陈雅莉
 	 */
 
-	private String class_number;
-	private String major_number;
-	private String student_name;
-	private String student_number;
 	private int student_id;
-	private int status = 0;
+	private String class_number;
+	private String student_number;
+	private String major;
+	private String student_name;
+
+	private int status;
 
 	public int getStatus() {
 		return status;
@@ -26,6 +27,14 @@ public class Student implements Serializable{
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getStudent_id() {
+		return student_id;
+	}
+
+	public void setStudent_id(int student_id) {
+		this.student_id = student_id;
 	}
 
 	public String getClass_number() {
@@ -36,22 +45,6 @@ public class Student implements Serializable{
 		this.class_number = class_number;
 	}
 
-	public String getMajor_number() {
-		return major_number;
-	}
-
-	public void setMajor_number(String major_number) {
-		this.major_number = major_number;
-	}
-
-	public String getStudent_name() {
-		return student_name;
-	}
-
-	public void setStudent_name(String student_name) {
-		this.student_name = student_name;
-	}
-
 	public String getStudent_number() {
 		return student_number;
 	}
@@ -60,11 +53,19 @@ public class Student implements Serializable{
 		this.student_number = student_number;
 	}
 
-	public int getStudent_id() {
-		return student_id;
+	public String getMajor() {
+		return major;
 	}
 
-	public void setStudent_id(int student_id) {
-		this.student_id = student_id;
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+	public String getStudent_name() {
+		return student_name;
+	}
+
+	public void setStudent_name(String student_name) {
+		this.student_name = student_name;
 	}
 }

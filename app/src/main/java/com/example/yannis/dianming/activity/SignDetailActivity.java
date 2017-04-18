@@ -1,20 +1,18 @@
 package com.example.yannis.dianming.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.ListPopupWindow;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,7 +22,7 @@ import android.widget.TextView;
 import com.example.yannis.dianming.R;
 import com.example.yannis.dianming.adapter.PopAdapter;
 import com.example.yannis.dianming.adapter.SignAdapter;
-import com.example.yannis.dianming.base.APIs;
+import com.example.yannis.dianming.base.ConstantValues;
 import com.example.yannis.dianming.base.BaseActivity;
 import com.example.yannis.dianming.base.Util;
 import com.example.yannis.dianming.bean.Record;
@@ -32,23 +30,24 @@ import com.example.yannis.dianming.bean.StudentSignState;
 import com.example.yannis.dianming.network.CommomHandler;
 import com.example.yannis.dianming.network.CommomListener;
 import com.example.yannis.dianming.network.CommonRequest;
-import com.example.yannis.dianming.network.RequestParams;
 import com.example.yannis.dianming.widget.Topbar;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class SignDetailActivity extends BaseActivity {
@@ -65,8 +64,10 @@ public class SignDetailActivity extends BaseActivity {
     ListView lists;
     @InjectView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
+    @InjectView(R.id.desc)
+    TextView desc;
 
-    private static final String url = APIs.GET_RESULT_BY_RECORD_ID;
+    private static final String url = ConstantValues.GET_RESULT_BY_RECORD_ID;
 
     private TextView windowTitle;
     private Button arrive;
@@ -81,8 +82,8 @@ public class SignDetailActivity extends BaseActivity {
     private PopAdapter popAdapter;
 
 
-    private int courseId, recordId, selectedStuID, sectionLength;
-    private String course_name;
+    private int courseId, recordId, selectedStuID, sectionLength, weekday;
+    private String course_name, description;
 
     private ArrayList<Record> signRecords;
 
@@ -92,6 +93,8 @@ public class SignDetailActivity extends BaseActivity {
 
     private SignAdapter adapter;
     private ArrayList<StudentSignState> students, selectedStudents;
+
+    private ProgressDialog progressDialog;
 
     //private LayoutInflater inflater;
 
@@ -103,7 +106,8 @@ public class SignDetailActivity extends BaseActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        //inflater = LayoutInflater.from(this);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("加载中...");
         states = new int[4];
         signRecords = new ArrayList<>();
         initChart();
@@ -112,55 +116,51 @@ public class SignDetailActivity extends BaseActivity {
         activity = this;
         adapter = new SignAdapter(selectedStudents, this, R.layout.sign_list_item);
         lists.setAdapter(adapter);
-        recordId = getIntent().getIntExtra(APIs.recordId, 0);
-        courseId = getIntent().getIntExtra(APIs.courseId, 0);
-        course_name = getIntent().getStringExtra(APIs.courseName);
-        sectionLength = getIntent().getIntExtra(APIs.sectionLength, 0);
-
+        recordId = getIntent().getIntExtra(ConstantValues.recordId, 0);
+        courseId = getIntent().getIntExtra(ConstantValues.courseId, 0);
+        course_name = getIntent().getStringExtra(ConstantValues.courseName);
+        sectionLength = getIntent().getIntExtra(ConstantValues.sectionLength, 0);
+        description = getIntent().getStringExtra("sign_nickname");
+        weekday = getIntent().getIntExtra(ConstantValues.weekday, -1);
     }
 
     private void initChart() {
-        chart.setTransparentCircleAlpha(110);
-        PieData data = getData();
-        chart.setHoleColorTransparent(true);
-        data.setDrawValues(false);
-        //chart.setHoleRadius(30f);  //半径
-        //chart.setTransparentCircleRadius(64f); // 半透明圈
-        chart.setHoleRadius(0);  //实心圆
-        chart.setDrawCenterText(false);
-        chart.setDrawHoleEnabled(false);
-        chart.setDrawSliceText(false);
-        chart.setUsePercentValues(true);
-        chart.setRotationAngle(90); // 初始旋转角度
-        chart.setDescription("");
-        chart.setRotationEnabled(true); // 可以手动旋转
-        chart.setUsePercentValues(false);  //显示成百分比
-        chart.setCenterText("");  //饼状图中间的文字
-        //设置数据
-        chart.setData(data);
 
-        Legend mLegend = chart.getLegend();  //设置比例图
-        mLegend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);  //最右边显示
-//      mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
-        mLegend.setXEntrySpace(7f);
-        mLegend.setYEntrySpace(5f);
-        chart.animateXY(1000, 1000);  //设置动画
+        chart.setUsePercentValues(false);
+        chart.getDescription().setEnabled(false);
+        chart.setExtraOffsets(5, 10, 5, 5);
+        chart.setDrawHoleEnabled(false);
+        chart.setDragDecelerationFrictionCoef(0.95f);
+
+        chart.setRotationAngle(0);
+        // enable rotation of the chart by touch
+        chart.setRotationEnabled(true);
+        chart.setHighlightPerTapEnabled(true);
+        chart.setDrawEntryLabels(false);
+        chart.setDrawSlicesUnderHole(false);
+        PieData data = getData();
+        chart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        l.setYOffset(0f);
+        chart.setData(data);
+        chart.invalidate();
     }
 
     private PieData getData() {
-        ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
-        xValues.add("已到");
-        xValues.add("迟到");
-        xValues.add("请假");
-        xValues.add("缺席");
-        ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
-        yValues.add(new Entry(25, 0));
-        yValues.add(new Entry(25, 1));
-        yValues.add(new Entry(25, 2));
-        yValues.add(new Entry(25, 3));
-        PieDataSet pieDataSet = new PieDataSet(yValues, " "/*显示在比例图上*/);
+        ArrayList<PieEntry> yValues = new ArrayList<PieEntry>();  //yVals用来表示封装每个饼块的实际数据
+        yValues.add(new PieEntry(100, "已到"));
+        yValues.add(new PieEntry(0, "迟到"));
+        yValues.add(new PieEntry(0, "请假"));
+        yValues.add(new PieEntry(0, "缺席"));
+        PieDataSet pieDataSet = new PieDataSet(yValues, " ");
         pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
-
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         // 饼图颜色
@@ -171,13 +171,14 @@ public class SignDetailActivity extends BaseActivity {
         colors.add(Color.rgb(218, 108, 108));
 
         pieDataSet.setColors(colors);
+        pieDataSet.setDrawValues(false);
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
+        float px = 2 * (metrics.densityDpi / 160f);
 
         pieDataSet.setSelectionShift(px); // 选中态多出的长度
 
-        PieData pieData = new PieData(xValues, pieDataSet);
+        PieData pieData = new PieData(pieDataSet);
 
         return pieData;
     }
@@ -189,16 +190,15 @@ public class SignDetailActivity extends BaseActivity {
             ++states[studentSignState.getStatus()];
         }
         PieData data = chart.getData();
-        PieDataSet dataSet = data.getDataSetByIndex(0);
-        Entry entry1 = dataSet.getEntryForXIndex(0);
-        entry1.setVal((float) (states[0] * 100 / students.size()));
-        Entry entry2 = dataSet.getEntryForXIndex(1);
-        entry2.setVal((float) (states[1] * 100 / students.size()));
-        Entry entry3 = dataSet.getEntryForXIndex(2);
-        entry3.setVal((float) (states[2] * 100 / students.size()));
-        Entry entry4 = dataSet.getEntryForXIndex(3);
-        entry4.setVal((float) (states[3] * 100 / students.size()));
-
+        IPieDataSet dataSet = data.getDataSetByIndex(0);
+        PieEntry entry1 = dataSet.getEntryForIndex(0);
+        entry1.setY((float) (states[0] * 100 / students.size()));
+        PieEntry entry2 = dataSet.getEntryForIndex(1);
+        entry2.setY((float) (states[1] * 100 / students.size()));
+        PieEntry entry3 = dataSet.getEntryForIndex(2);
+        entry3.setY((float) (states[2] * 100 / students.size()));
+        PieEntry entry4 = dataSet.getEntryForIndex(3);
+        entry4.setY((float) (states[3] * 100 / students.size()));
         chart.notifyDataSetChanged();
         chart.invalidate();
     }
@@ -208,6 +208,7 @@ public class SignDetailActivity extends BaseActivity {
         initPopupWindow();
         initPopupListWindow();
         courseName.setText(course_name);
+        desc.setText(description);
         String[] labels = getResources().getStringArray(R.array.sign_status);
         for (int i = 0; i < labels.length; i++) {
             tabs.addTab(tabs.newTab().setText(labels[i]));
@@ -241,9 +242,10 @@ public class SignDetailActivity extends BaseActivity {
             @Override
             public void right1Click() {//补课点名
                 Intent intent = new Intent(activity, SignActivity.class);
-                intent.putExtra(APIs.courseID, courseId);
-                intent.putExtra(APIs.courseName, course_name);
-                intent.putExtra(APIs.sectionLength, sectionLength);
+                intent.putExtra(ConstantValues.courseID, courseId);
+                intent.putExtra(ConstantValues.courseName, course_name);
+                intent.putExtra(ConstantValues.sectionLength, sectionLength);
+                intent.putExtra(ConstantValues.weekday, weekday);
                 activity.startActivity(intent);
                 activity.finish();
             }
@@ -293,6 +295,7 @@ public class SignDetailActivity extends BaseActivity {
                     listPopupWindow.dismiss();
                 }
                 recordId = signRecords.get(position).getAttendance_record_id();
+                description = signRecords.get(position).getName();
                 loadData();
             }
         });
@@ -300,7 +303,8 @@ public class SignDetailActivity extends BaseActivity {
 
     private void popupMenu() {
         //listPopupWindow.show();
-        CommonRequest.createGetRequest(APIs.GET_RECORD_ID + "?" + APIs.courseId + "=" + courseId, null, new
+        CommonRequest.createGetRequest(ConstantValues.GET_RECORD_ID + "?" + ConstantValues.courseId + "=" +
+                courseId, null, new
                 CommomHandler(new CommomListener() {
 
 
@@ -328,17 +332,6 @@ public class SignDetailActivity extends BaseActivity {
     }
 
     private void refreshMenu() {
-//        popMenuList = new String[signRecords.size()];
-//        Record record = null;
-//        int size = signRecords.size();
-//        for (int i = 0; i < size; i ++){
-//            record = signRecords.get(i);
-//            popMenuList[i] = record.getName();
-//        }
-//        //popAdapter.
-//        popAdapter.notifyDataSetChanged();
-//        listPopupWindow.show();
-
         popAdapter.records = signRecords;
         popAdapter.notifyDataSetChanged();
         listPopupWindow.show();
@@ -404,19 +397,21 @@ public class SignDetailActivity extends BaseActivity {
             final JSONObject jsonObject = new JSONObject();
             JSONArray array = new JSONArray();
             try {
-                jsonObject.put(APIs.resultId, selectedStuID);
-                jsonObject.put(APIs.status, i);
+                jsonObject.put(ConstantValues.resultId, selectedStuID);
+                jsonObject.put(ConstantValues.status, i);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             array.put(jsonObject);
-            CommonRequest.createPutRequest(APIs.POST_SIGN_RESULT, array.toString(), new CommomHandler(new CommomListener() {
+            CommonRequest.createPutRequest(ConstantValues.POST_SIGN_RESULT, array.toString(), new
+                    CommomHandler(new CommomListener() {
                 @Override
                 public void onSuccess(Object object) {
                     try {
                         JSONObject ret = new JSONObject(String.valueOf(object));
-                        if (ret.getInt(APIs.status) == 1) {
+                        if (ret.getInt(ConstantValues.status) == 1) {
                             loadData();
+                            Util.showToast(activity, "修改成功");
                         } else {
                             Util.showToast(activity, ret.toString());
                         }
@@ -424,7 +419,6 @@ public class SignDetailActivity extends BaseActivity {
                         e.printStackTrace();
                     }
 
-                    Util.logHelper(String.valueOf(object) + "--success");
                 }
 
                 @Override
@@ -448,28 +442,38 @@ public class SignDetailActivity extends BaseActivity {
 
     @Override
     public void loadData() {
-        CommonRequest.createGetRequest(url + "?" + APIs.ret_recordId + "=" + recordId, null, new
+        if (!refreshLayout.isRefreshing()){
+            progressDialog.show();
+        }
+        CommonRequest.createGetRequest(url + "?" + ConstantValues.ret_recordId + "=" + recordId, null, new
                 CommomHandler(new CommomListener() {
             @Override
             public void onSuccess(Object object) {
                 Util.logHelper(String.valueOf(object) + "success");
                 if (object instanceof List) {
                     students = (ArrayList<StudentSignState>) object;
-                    if (students.size() != 0){
+                    if (students.size() != 0) {
+                        desc.setText(description);
                         refreshListview();
                         refreshChart();
-                    }else {
-                        Util.showToast(activity, "此次点名记录为空");
+                    } else {
+                        Util.showToast(activity, "此次点名记录为空,数据无效");
                     }
 
                 } else {
                     Util.logHelper(String.valueOf(object) + "data error");
                     Util.showToast(activity, "data error");
                 }
+                if (progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(Object object) {
+                if (progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
                 Util.logHelper(String.valueOf(object) + "failure");
             }
         }, StudentSignState.class));

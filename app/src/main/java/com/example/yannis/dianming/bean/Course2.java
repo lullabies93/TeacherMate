@@ -8,24 +8,56 @@ import java.util.List;
  */
 
 public class Course2 implements Serializable{
+
+    private int absences_deduce_point;
+    private int vacates_deduce_point;
+    private int lates_deduce_point;
     private String course_number;
-    private int homeworks_percent_of_total_grade;
     private int attendances_percent_of_total_grade;
     private String course_name;
-    private int lates_deduce_point;
-    private int absences_deduce_point;
-    private int credit;
     private int course_id;
+
     private int weekday;
     private String section;
     private String classroom;
 
-    public Course2(String section, String classroom, int weekday, int course_id, String course_name) {
-        this.section = section;
+    public Course2(String classroom, int absences_deduce_point, int vacates_deduce_point, int
+            lates_deduce_point, String course_number, int attendances_percent_of_total_grade, String
+            course_name, int course_id, int weekday, String section) {
         this.classroom = classroom;
-        this.weekday = weekday;
-        this.course_id = course_id;
+        this.absences_deduce_point = absences_deduce_point;
+        this.vacates_deduce_point = vacates_deduce_point;
+        this.lates_deduce_point = lates_deduce_point;
+        this.course_number = course_number;
+        this.attendances_percent_of_total_grade = attendances_percent_of_total_grade;
         this.course_name = course_name;
+        this.course_id = course_id;
+        this.weekday = weekday;
+        this.section = section;
+    }
+
+    public int getAbsences_deduce_point() {
+        return absences_deduce_point;
+    }
+
+    public void setAbsences_deduce_point(int absences_deduce_point) {
+        this.absences_deduce_point = absences_deduce_point;
+    }
+
+    public int getVacates_deduce_point() {
+        return vacates_deduce_point;
+    }
+
+    public void setVacates_deduce_point(int vacates_deduce_point) {
+        this.vacates_deduce_point = vacates_deduce_point;
+    }
+
+    public int getLates_deduce_point() {
+        return lates_deduce_point;
+    }
+
+    public void setLates_deduce_point(int lates_deduce_point) {
+        this.lates_deduce_point = lates_deduce_point;
     }
 
     public String getCourse_number() {
@@ -34,14 +66,6 @@ public class Course2 implements Serializable{
 
     public void setCourse_number(String course_number) {
         this.course_number = course_number;
-    }
-
-    public int getHomeworks_percent_of_total_grade() {
-        return homeworks_percent_of_total_grade;
-    }
-
-    public void setHomeworks_percent_of_total_grade(int homeworks_percent_of_total_grade) {
-        this.homeworks_percent_of_total_grade = homeworks_percent_of_total_grade;
     }
 
     public int getAttendances_percent_of_total_grade() {
@@ -58,30 +82,6 @@ public class Course2 implements Serializable{
 
     public void setCourse_name(String course_name) {
         this.course_name = course_name;
-    }
-
-    public int getLates_deduce_point() {
-        return lates_deduce_point;
-    }
-
-    public void setLates_deduce_point(int lates_deduce_point) {
-        this.lates_deduce_point = lates_deduce_point;
-    }
-
-    public int getAbsences_deduce_point() {
-        return absences_deduce_point;
-    }
-
-    public void setAbsences_deduce_point(int absences_deduce_point) {
-        this.absences_deduce_point = absences_deduce_point;
-    }
-
-    public int getCredit() {
-        return credit;
-    }
-
-    public void setCredit(int credit) {
-        this.credit = credit;
     }
 
     public int getCourse_id() {

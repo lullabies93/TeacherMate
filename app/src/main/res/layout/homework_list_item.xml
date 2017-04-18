@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
 
     <TextView
+        android:id="@+id/homeworkName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/homeworkName"
-        android:textSize="16sp"
-        android:textColor="@color/black"
+        android:paddingBottom="2dp"
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
-        android:paddingBottom="2dp"
-        android:text="作业名字"/>
+        android:text="作业名字"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/homeworkWeek"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="2dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="作业周数"
-            android:id="@+id/homeworkWeek"
-            android:textSize="14sp"
-            android:textColor="@color/lightblack"
+        android:layout_below="@+id/homeworkName"
+        android:paddingLeft="8dp"
+        android:text="作业周数"
+        android:textColor="@color/lightblack"
+        android:textSize="14sp"/>
 
-            android:paddingLeft="8dp"/>
-        <TextView
-
-            android:id="@+id/homeworkDesc"
-            android:text="其它描述"
-            android:textColor="@color/lightblack"
-            android:textSize="14sp"
-            android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
-
-</LinearLayout>
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/dark_back"/>
+</RelativeLayout>

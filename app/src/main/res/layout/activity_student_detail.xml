@@ -2,13 +2,135 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_student_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/graywhite"
     tools:context="com.example.yannis.dianming.activity.StudentDetailActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:id="@+id/title"
+        android:layout_height="48dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back"
+            android:textSize="14sp"
+            android:text="@string/back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:textColor="@drawable/maincolor_selector"/>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:padding="8dp"
+                android:background="@drawable/left_tab"
+                android:text="考勤"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:checked="true"
+                android:textColor="@color/text_color_selector"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/maincolor"/>
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:button="@null"
+                android:background="@drawable/right_tab"
+                android:text="作业"
+                android:layout_weight="1"
+                android:textColor="@color/text_color_selector"/>
+        </RadioGroup>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:id="@+id/info">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/studentName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp"
+            android:text="学生姓名"
+            android:textColor="@color/lightblack"/>
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_below="@+id/studentName"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/studentMajor"
+                android:gravity="center"
+                android:padding="4dp"
+                android:textSize="14sp"
+                android:text="专业"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:maxLength="9"
+                android:textColor="@color/lightblack"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/studentClass"
+                android:gravity="center"
+                android:padding="4dp"
+                android:textSize="14sp"
+                android:text="班级"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:textColor="@color/lightblack"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/studentNumber"
+                android:padding="4dp"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="学号"
+                android:layout_weight="1"
+                android:textColor="@color/lightblack"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/info"
+        android:layout_marginTop="8dp"
+        android:id="@+id/viewPager"></android.support.v4.view.ViewPager>
 
 </RelativeLayout>

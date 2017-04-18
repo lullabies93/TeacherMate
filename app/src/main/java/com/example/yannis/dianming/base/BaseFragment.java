@@ -16,25 +16,26 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
 
+    private View view;//缓存fragment
+
     public abstract int getLayoutID();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(getLayoutID(), null);
-        ButterKnife.inject(this, rootView);
-        initData(savedInstanceState);
-        initView(rootView);
-        loadData();
-        return rootView;
+        if (view == null){
+            view = inflater.inflate(getLayoutID(), container, false);
+            ButterKnife.inject(this, view);
+            initData(savedInstanceState);
+            initView(view);
+            loadData();
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null){
+            parent.removeView(view);
+        }
+        return view;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
 
     @Override
     public void onDestroyView() {

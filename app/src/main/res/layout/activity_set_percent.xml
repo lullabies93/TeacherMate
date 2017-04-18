@@ -5,12 +5,13 @@
     android:id="@+id/activity_set_percent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/graywhite"
     tools:context="com.example.yannis.dianming.activity.SetPercentActivity">
 
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:background="@color/white"
         android:orientation="horizontal" >
 
@@ -28,13 +29,22 @@
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/set_percent"
+            android:text="课程名"
             android:textSize="18sp"
             android:padding="10dp"
             android:gravity="center"
             android:textColor="@color/maincolor"
             android:layout_centerInParent="true"/>
-
+        <TextView
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/submit"
+            android:textColor="@drawable/maincolor_selector" />
 
     </RelativeLayout>
     <View
@@ -44,88 +54,174 @@
         android:background="@color/graywhite"
         android:layout_below="@+id/title"/>
 
-    <TextView
-        android:id="@+id/chooseCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/choose_course"
-        android:textSize="16sp"
-        android:layout_below="@+id/view"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="10dp"/>
 
-    <EditText
-        android:id="@+id/courseEditView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/chooseCourse"
-        android:layout_toRightOf="@+id/chooseCourse"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="16sp"
-        android:padding="8dp"
-        android:hint="@string/choose_course"
-        android:layout_alignParentRight="true"
-        android:editable="false"
-        android:background="@drawable/editview"/>
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/chooseCourse"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true">
-    </com.github.mikephil.charting.charts.PieChart>
+    <LinearLayout
+        android:id="@+id/absenceLayout"
+        android:orientation="horizontal"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="8dp"
+        android:padding="4dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/abcent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/abcent_punish"
+            android:textSize="16sp"
+            android:layout_marginLeft="12dp"/>
+        <EditText
+            android:id="@+id/punishEdit"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:gravity="center"
+            android:text="0"
+            android:layout_marginLeft="8dp"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分/人/次"
+            android:textSize="14sp"
+            android:layout_marginLeft="6dp"/>
+    </LinearLayout>
 
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/seekbar"
+    <LinearLayout
+        android:id="@+id/lateLayout"
+        android:orientation="horizontal"
+        android:layout_below="@+id/absenceLayout"
+        android:layout_width="match_parent"
+        android:padding="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/late"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/late_punish"
+            android:textSize="16sp"
+            android:layout_marginLeft="12dp"/>
+        <EditText
+            android:id="@+id/latePunishEdit"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:gravity="center"
+            android:text="0"
+            android:layout_marginLeft="8dp"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分/人/次"
+            android:textSize="14sp"
+            android:layout_marginLeft="6dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/leaveLayout"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lateLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:padding="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/leave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/leave_punish"
+            android:textSize="16sp"
+            android:layout_marginLeft="12dp"/>
+        <EditText
+            android:id="@+id/leavePunishEdit"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:gravity="center"
+            android:text="0"
+            android:layout_marginLeft="8dp"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分/人/次"
+            android:textSize="14sp"
+            android:layout_marginLeft="6dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/signPercent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/chart"/>
+        android:layout_below="@+id/leaveLayout"
+        android:background="@color/white"
+        android:layout_marginTop="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/typeName"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:text="考勤占比"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dp"
+            android:textColor="@color/lightblack"/>
 
+        <EditText
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/signPercentEt"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:hint="00"
+            android:textColorHint="@color/white"
+            android:gravity="center"
+            android:inputType="number"
+            android:layout_toLeftOf="@+id/percent"
+            android:background="@drawable/circle_selector"
+            android:layout_margin="8dp"
+            android:padding="2dp"
+            android:textColor="@color/white"/>
 
-    <TextView
-        android:id="@+id/abcent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/abcent_punish"
-        android:textSize="16sp"
-        android:layout_below="@+id/seekbar"
-        android:layout_margin="12dp"/>
-    <EditText
-        android:id="@+id/punishEdit"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seekbar"
-        android:layout_toRightOf="@+id/abcent"
-        android:background="@drawable/editview"
-        android:padding="4dp"
-        android:layout_margin="8dp"
-        android:inputType="number"
-        android:layout_alignBaseline="@+id/abcent"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="分/人/次"
-        android:textSize="14sp"
-        android:layout_below="@+id/seekbar"
-        android:layout_toRightOf="@+id/punishEdit"
-        android:layout_alignBaseline="@+id/punishEdit"
-        android:layout_margin="6dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/percent"
+            android:layout_centerVertical="true"
+            android:textSize="22sp"
+            android:text="%"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/maincolor"/>
+    </RelativeLayout>
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/addType"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/signPercent"
+        android:text="添加作业类型"
+        android:textColor="@color/lightblack"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/white_btn_selector"/>
+
+    <ListView
+        android:id="@+id/typeListview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/punishEdit"
-        android:layout_margin="8dp"
-        android:text="@string/submit"
-        android:textSize="18sp"
-        android:padding="6dp"
-        android:textColor="@color/white"
-        android:background="@drawable/login_btn_selector"/>
+        android:layout_below="@+id/addType"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"></ListView>
+
 
 </RelativeLayout>

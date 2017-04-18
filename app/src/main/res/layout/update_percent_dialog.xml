@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/dialog_background">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/dialog_title"
+        android:text="修改该类型占比？"/>
+
+    <View
+        android:id="@+id/view"
+        style="@style/dialog_view"
+        android:layout_below="@+id/title"/>
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv"
+            style="@style/dialog_tv"
+            android:text="类型名："/>
+        　　
+
+        <EditText
+            android:id="@+id/et"
+            android:layout_width="40dp"
+            android:layout_alignBaseline="@+id/tv"
+            android:layout_toRightOf="@+id/tv"
+            android:inputType="number"
+            style="@style/dialog_et"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/et"
+            android:text="%"
+            style="@style/dialog_tv"
+            android:layout_alignBaseline="@+id/et"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_below="@+id/content"
+        android:text="最大可设置占比"
+        style="@style/dialog_tv"
+        android:layout_centerHorizontal="true"/>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@+id/tips"
+        style="@style/dialog_view"/>
+
+    <TextView
+        android:id="@+id/ok"
+        style="@style/dialog_ok"
+        android:layout_below="@+id/view1"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_toLeftOf="@+id/ok"
+        android:layout_below="@+id/view1"
+        style="@style/dialog_cancel"/>
+
+
+</RelativeLayout>

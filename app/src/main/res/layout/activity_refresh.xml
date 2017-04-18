@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graywhite"
+    tools:context="com.example.yannis.dianming.activity.RefreshActivity">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="48dp"
+       android:id="@+id/title"
+       android:background="@color/white">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/back"
+           android:textColor="@drawable/maincolor_selector"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="8dp"
+           android:textSize="14sp"
+           android:id="@+id/back"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/titleText"
+           android:text="数据刷新"
+           android:layout_centerInParent="true"
+           android:textColor="@color/maincolor_checked"
+           android:textSize="18sp"/>
+
+   </RelativeLayout>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:id="@+id/pwdEditview"
+        android:textSize="16sp"
+        android:hint="@string/password"
+        android:padding="8dp"
+        android:inputType="textPassword"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/editview"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="40dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:id="@+id/getCode"
+        android:layout_below="@+id/title"
+        android:layout_toRightOf="@+id/pwdEditview"
+        android:background="@color/maincolor_checked"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:text="请求验证码"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:id="@+id/codeEditview"
+        android:textSize="16sp"
+        android:hint="输入验证码"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_alignLeft="@+id/pwdEditview"
+        android:inputType="textPassword"
+        android:background="@drawable/editview"
+        android:layout_below="@+id/pwdEditview"
+        android:layout_marginTop="14dp"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/codeView"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/codeEditview"
+        android:layout_marginLeft="20dp"
+        android:layout_alignBottom="@+id/codeEditview"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:id="@+id/confirm"
+        android:background="@drawable/login_btn_selector"
+        android:text="提交"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/codeEditview"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

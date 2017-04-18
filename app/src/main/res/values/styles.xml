@@ -8,4 +8,73 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="dialog_background">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:background">@drawable/editview</item>
+        <item name="android:layout_marginLeft">16dp</item>
+    </style>
+
+    <style name="dialog_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">@color/maincolor</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="dialog_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/maincolor</item>
+    </style>
+
+    <style name="dialog_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/maincolor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="dialog_et">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/editview</item>
+        <item name="android:textColor">@color/maincolor_checked</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">@color/maincolor</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="dialog_ok">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:text">确定</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/maincolor_selector</item>
+        <item name="android:background">@drawable/white_btn_selector</item>
+        <item name="android:layout_marginRight">12dp</item>
+    </style>
+
+    <style name="dialog_cancel">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:text">取消</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textColor">@drawable/maincolor_selector</item>
+        <item name="android:background">@drawable/white_btn_selector</item>
+        <item name="android:layout_marginRight">12dp</item>
+    </style>
+
 </resources>

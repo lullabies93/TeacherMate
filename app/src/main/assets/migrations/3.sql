@@ -1,0 +1,1 @@
+ALTER TABLE pushList ADD COLUMN solved BOOLEAN;

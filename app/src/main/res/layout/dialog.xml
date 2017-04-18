@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:id="@+id/dialog"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/dialog"
+    style="@style/dialog_background">
 
     <TextView
-        android:layout_margin="8dp"
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
         android:text="请输入备注："
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:paddingLeft="8dp"/>
+        android:textColor="@color/maincolor"
+        android:textSize="16sp"/>
     　　
 
     <EditText
-        android:layout_margin="8dp"
         android:id="@+id/et"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_width="120dp"
+        android:layout_alignBaseline="@+id/tv"
+        android:layout_toRightOf="@+id/tv"
+        style="@style/dialog_et"/>
 
-</LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv"
+        android:layout_marginTop="18dp"
+        android:background="@color/maincolor"/>
+
+    <TextView
+        android:id="@+id/ok"
+        android:layout_below="@+id/view1"
+        style="@style/dialog_ok"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_below="@+id/view1"
+        android:layout_toLeftOf="@+id/ok"
+        style="@style/dialog_cancel"/>
+
+</RelativeLayout>

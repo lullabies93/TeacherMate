@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
@@ -27,10 +27,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/courseName"
             android:text="CourseName"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="4dp"
             android:background="@color/white"
             android:layout_centerInParent="true"
-            android:textColor="@color/maincolor"/>
+            android:textColor="@color/maincolor_checked"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,12 +51,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
-        android:background="@color/white"
         android:id="@+id/swipeRefreshLayout">
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/homeworkListview"></ListView>
+            android:layout_height="wrap_content"
+            android:id="@+id/listview"
+            android:divider="@color/graywhite"></ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 

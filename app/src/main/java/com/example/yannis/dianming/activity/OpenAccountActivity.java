@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.yannis.dianming.R;
-import com.example.yannis.dianming.base.APIs;
+import com.example.yannis.dianming.base.ConstantValues;
 import com.example.yannis.dianming.base.BaseActivity;
 import com.example.yannis.dianming.base.MyApplication;
 import com.example.yannis.dianming.base.Util;
@@ -20,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -60,7 +59,7 @@ public class OpenAccountActivity extends BaseActivity {
     @Override
     public void loadData() {
         myApplication = (MyApplication) getApplication();
-        CommonRequest.createGetRequest(APIs.GET_ASSISTANT + "?" + APIs.teacherID + "=" + myApplication
+        CommonRequest.createGetRequest(ConstantValues.GET_ASSISTANT + "?" + ConstantValues.teacherID + "=" + myApplication
                 .getTeacher_id(), null, new CommomHandler(new CommomListener() {
             @Override
             public void onSuccess(Object object) {
@@ -74,7 +73,7 @@ public class OpenAccountActivity extends BaseActivity {
                         username.setText(assistant.getString("username"));
                         password.setText("**********");
                         notice.setText(assistant.getString("remark"));
-                        assistantId = assistant.getInt(APIs.assistantId);
+                        assistantId = assistant.getInt(ConstantValues.assistantId);
                         username.setEnabled(false);
                         password.setEnabled(false);
                         notice.setEnabled(false);
@@ -116,9 +115,9 @@ public class OpenAccountActivity extends BaseActivity {
 
     private void submit() {
         String text = submit.getText().toString();
-        if (text.equals(APIs.submit)) {
+        if (text.equals(ConstantValues.submit)) {
             post();
-        } else if (text.equals(APIs.delete)) {
+        } else if (text.equals(ConstantValues.delete)) {
             delete();
         }
     }
@@ -126,14 +125,14 @@ public class OpenAccountActivity extends BaseActivity {
     private void delete() {
         JSONArray array = new JSONArray();
         array.put(assistantId);
-        CommonRequest.createDeleteRequest(APIs.GET_ASSISTANT, array.toString(), new CommomHandler(new CommomListener() {
+        CommonRequest.createDeleteRequest(ConstantValues.GET_ASSISTANT, array.toString(), new CommomHandler(new CommomListener() {
 
 
             @Override
             public void onSuccess(Object object) {
                 try {
                     JSONObject ret = new JSONObject(String.valueOf(object));
-                    if (ret.getInt(APIs.status) == 1) {
+                    if (ret.getInt(ConstantValues.status) == 1) {
                         Util.showToast(OpenAccountActivity.this, "子账号已删除，可重新创建");
                         title.setText("开通子账号");
                         submit.setText("提交");
@@ -168,22 +167,26 @@ public class OpenAccountActivity extends BaseActivity {
             Util.showToast(OpenAccountActivity.this, "输入不能为空");
             return;
         }
+        if (pwd.length()<6){
+            Util.showToast(OpenAccountActivity.this, "密码长度不能少于六位");
+            return;
+        }
         JSONObject jsonObject = new JSONObject();
         JSONObject param = new JSONObject();
         try {
-            jsonObject.put(APIs.USERNAME, username.getText().toString());
-            jsonObject.put(APIs.PASSWORD, password.getText().toString());
-            param.put(APIs.registerUser, jsonObject);
-            param.put(APIs.teacherID, myApplication.getTeacher_id());
-            param.put(APIs.remark, notice.getText().toString());
-            CommonRequest.createJsonPostRequest(APIs.GET_ASSISTANT, param.toString(), new CommomHandler(new CommomListener() {
+            jsonObject.put(ConstantValues.USERNAME, username.getText().toString());
+            jsonObject.put(ConstantValues.PASSWORD, password.getText().toString());
+            param.put(ConstantValues.registerUser, jsonObject);
+            param.put(ConstantValues.teacherID, myApplication.getTeacher_id());
+            param.put(ConstantValues.remark, notice.getText().toString());
+            CommonRequest.createJsonPostRequest(ConstantValues.GET_ASSISTANT, param.toString(), new CommomHandler(new CommomListener() {
 
 
                 @Override
                 public void onSuccess(Object object) {
                     try {
                         JSONObject ret = new JSONObject(String.valueOf(object));
-                        if (ret.getInt(APIs.status) == 1) {
+                        if (ret.getInt(ConstantValues.status) == 1) {
                             Util.showToast(OpenAccountActivity.this, "成功开通子账号");
                             OpenAccountActivity.this.finish();
                         } else {

@@ -12,14 +12,14 @@
     <com.example.yannis.dianming.widget.Topbar
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         topbar:leftMargin="10dp"
-        topbar:leftSize="8sp"
+        topbar:leftSize="14sp"
         topbar:leftText="@string/back"
         topbar:rightMargin1="20dp"
         topbar:rightMargin2="10dp"
-        topbar:rightSize="8sp"
-        topbar:rightText1="@string/rollcall"
+        topbar:rightSize="14sp"
+        topbar:rightText1="补课点名"
         topbar:rightText2="@string/history_records"
         topbar:textColor="@drawable/maincolor_selector">
     </com.example.yannis.dianming.widget.Topbar>

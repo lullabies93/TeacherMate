@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/dialog_background">
+
+
+    <TextView
+        android:id="@+id/content"
+        style="@style/dialog_tv"
+        android:padding="8dp"
+        android:text="此课程没有设置考核项,是否去添加?"/>
+
+    <View
+        android:id="@+id/view"
+        style="@style/dialog_view"
+        android:layout_below="@+id/content"/>
+
+    <Button
+        android:id="@+id/ok"
+        style="@style/dialog_ok"
+        android:layout_below="@+id/view"/>
+
+    <Button
+        android:id="@+id/cancel"
+        style="@style/dialog_cancel"
+        android:layout_below="@+id/view"
+        android:layout_toLeftOf="@+id/ok"/>
+
+
+</RelativeLayout>

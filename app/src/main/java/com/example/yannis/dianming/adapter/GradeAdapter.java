@@ -1,27 +1,14 @@
 package com.example.yannis.dianming.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.yannis.dianming.R;
-import com.example.yannis.dianming.base.APIs;
-import com.example.yannis.dianming.base.Util;
 import com.example.yannis.dianming.bean.HomeworkGrade;
-import com.example.yannis.dianming.bean.HomeworkRecord;
-import com.example.yannis.dianming.network.CommomHandler;
-import com.example.yannis.dianming.network.CommomListener;
-import com.example.yannis.dianming.network.CommonRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -61,19 +48,19 @@ public class GradeAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.grade_list_item, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         final HomeworkGrade grade = gradeArrayList.get(position);
         holder.studentName.setText(grade.getStudent_name());
         holder.studentScore.setText(String.valueOf(grade.getScore()));
-
+        holder.studentNumber.setText(grade.getStudent_number());
         return convertView;
     }
 
@@ -82,6 +69,8 @@ public class GradeAdapter extends BaseAdapter {
         TextView studentName;
         @InjectView(R.id.studentScore)
         TextView studentScore;
+        @InjectView(R.id.studentNumber)
+        TextView studentNumber;
 
         ViewHolder(View view) {
             ButterKnife.inject(this, view);

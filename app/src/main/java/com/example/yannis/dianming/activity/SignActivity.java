@@ -18,9 +18,11 @@ import android.widget.TextView;
 import com.example.yannis.dianming.R;
 import com.example.yannis.dianming.adapter.PopAdapter;
 import com.example.yannis.dianming.adapter.SignListAdapter;
-import com.example.yannis.dianming.base.APIs;
+import com.example.yannis.dianming.base.ConstantValues;
 import com.example.yannis.dianming.base.BaseActivity;
+import com.example.yannis.dianming.base.DialogListener;
 import com.example.yannis.dianming.base.MyApplication;
+import com.example.yannis.dianming.base.ShowDialogUtil;
 import com.example.yannis.dianming.base.Util;
 import com.example.yannis.dianming.bean.Record;
 import com.example.yannis.dianming.bean.Student;
@@ -39,7 +41,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class SignActivity extends BaseActivity {
@@ -68,7 +69,7 @@ public class SignActivity extends BaseActivity {
     private ArrayList<Student> recommendStudents, commomStudents, allStudents;
     private int courseID, sectionLength, recordId;
     private String url = "";
-    private String course_name, date;
+    private String course_name, date, sign_name;
 
     private ListPopupWindow listPopupWindow;
     private PopAdapter popAdapter;
@@ -77,6 +78,8 @@ public class SignActivity extends BaseActivity {
     private MyApplication myApplication;
 
     private SignActivity activity;
+
+    private int weekday;
 
     @Override
     public int getLayoutID() {
@@ -103,8 +106,6 @@ public class SignActivity extends BaseActivity {
 
         initPopupListWindow();//初始化记录窗口
 
-        topbar.findViewById(R.id.rightTv1_id).setVisibility(View.GONE);
-
 
         topbar.setOnTopBarClickListener(new Topbar.TopBarClickListener() {
             @Override
@@ -114,7 +115,7 @@ public class SignActivity extends BaseActivity {
 
             @Override
             public void right1Click() {
-
+                topbar.findViewById(R.id.rightTv1_id).setVisibility(View.GONE);
             }
 
             @Override
@@ -127,29 +128,30 @@ public class SignActivity extends BaseActivity {
     }
 
     private void popupMenu() {
-        CommonRequest.createGetRequest(APIs.GET_RECORD_ID + "?" + APIs.courseId + "=" + courseID, null, new
+        CommonRequest.createGetRequest(ConstantValues.GET_RECORD_ID + "?" + ConstantValues.courseId + "=" +
+                courseID, null, new
                 CommomHandler(new CommomListener() {
 
 
             @Override
             public void onSuccess(Object object) {
                 if (object instanceof ArrayList) {
-                    Util.logHelper(object.toString()+"---success");
+                    Util.logHelper(object.toString() + "---success");
                     signRecords = (ArrayList<Record>) object;
-                    if (signRecords.size() == 0){
+                    if (signRecords.size() == 0) {
                         Util.showToast(activity, "无点名记录");
-                    }else{
+                    } else {
                         refreshMenu();
 
                     }
-                }else {
+                } else {
                     Util.showToast(activity, "data error");
                 }
             }
 
             @Override
             public void onFailure(Object object) {
-                Util.logHelper(object.toString()+"---failure");
+                Util.logHelper(object.toString() + "---failure");
             }
         }, Record.class));
     }
@@ -165,23 +167,23 @@ public class SignActivity extends BaseActivity {
         popAdapter = new PopAdapter(signRecords, this);
         listPopupWindow.setAdapter(popAdapter);
         listPopupWindow.setWidth(300);
-        listPopupWindow.setHeight(400);
+        listPopupWindow.setHeight(300);
         listPopupWindow.setModal(true);
 
         listPopupWindow.setAnchorView(topbar.findViewById(R.id.rightTv2_id));
         listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (listPopupWindow.isShowing()){
+                if (listPopupWindow.isShowing()) {
                     listPopupWindow.dismiss();
                 }
                 recordId = signRecords.get(position).getAttendance_record_id();
                 //跳转到detail页面
-                Intent intent  = new Intent(SignActivity.this, SignDetailActivity.class);
-                intent.putExtra(APIs.courseId, courseID);
-                intent.putExtra(APIs.recordId, recordId);
-                intent.putExtra(APIs.courseName, course_name);
-                intent.putExtra(APIs.sectionLength, sectionLength);
+                Intent intent = new Intent(SignActivity.this, SignDetailActivity.class);
+                intent.putExtra(ConstantValues.courseId, courseID);
+                intent.putExtra(ConstantValues.recordId, recordId);
+                intent.putExtra(ConstantValues.courseName, course_name);
+                intent.putExtra(ConstantValues.sectionLength, sectionLength);
                 startActivity(intent);
                 finish();
             }
@@ -195,10 +197,10 @@ public class SignActivity extends BaseActivity {
             public void create(SwipeMenu menu) {
                 menu.addMenuItem(createMenuItem(new ColorDrawable(Color.rgb(0x11, 0xFF,
                         0x11)), "已到"));
-                menu.addMenuItem(createMenuItem(new ColorDrawable(Color.rgb(0x11, 0x11,
-                        0xFF)), "请假"));
-                menu.addMenuItem(createMenuItem(new ColorDrawable(Color.rgb(0xFF, 0x11,
-                        0x11)), "缺席"));
+                menu.addMenuItem(createMenuItem(new ColorDrawable(Color.rgb(0x00, 0xB2,
+                        0xEE)), "请假"));
+                menu.addMenuItem(createMenuItem(new ColorDrawable(Color.rgb(0xFF, 0x40,
+                        0x40)), "缺席"));
             }
         };
         // set creator
@@ -229,7 +231,7 @@ public class SignActivity extends BaseActivity {
                 }
                 if (flag == 1) {
                     commomAdapter.students.get(position).setStatus(index);
-                   // commomAdapter.students = commomStudents;
+                    // commomAdapter.students = commomStudents;
                     commomAdapter.notifyDataSetChanged();
                 }
                 return false;
@@ -255,56 +257,87 @@ public class SignActivity extends BaseActivity {
     }
 
     private void submit() {
-        showDialog();
-
-
+        showTheDialog();
     }
 
-    private void showDialog() {
-        LayoutInflater inflater = getLayoutInflater();
-        View   dialog = inflater.inflate(R.layout.dialog,(ViewGroup) findViewById(R.id.dialog));
-        final EditText   editText = (EditText) dialog.findViewById(R.id.et);
-        editText.setHint(date);
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        builder.setTitle("请输入备注");
-        builder.setMessage(null);
-        builder.setView(dialog);
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+    private void showTheDialog() {
+        ShowDialogUtil.showAddMarkDialog(activity, weekday, myApplication.getWeekday(), new
+                DialogListener<String>() {
+
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            public void onDialogClick(String ret) {
+                isNameUnique(ret);
             }
         });
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+    }
+
+    private boolean isNameUnique = true;
+
+    private void isNameUnique(final String sign_name) {
+        CommonRequest.createGetRequest(ConstantValues.GET_RECORD_ID + "?" + ConstantValues.courseId + "=" +
+                courseID, null, new
+                CommomHandler(new CommomListener() {
+
+
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                getRecordId(editText.getText().toString());
+            public void onSuccess(Object object) {
+                if (object instanceof ArrayList) {
+                    Util.logHelper(object.toString() + "---success");
+                    signRecords = (ArrayList<Record>) object;
+                    Util.logHelper(String.valueOf(signRecords.size()));
+                    if (signRecords.size() == 0) {
+                        isNameUnique = true;
+                        getRecordId(sign_name);
+                    } else {
+                        for (Record record : signRecords) {
+                            if (record.getName().equals(sign_name)) {
+                                Util.logHelper(record.getName());
+                                isNameUnique = false;
+                            }
+                        }
+                        if (isNameUnique) {
+                            getRecordId(sign_name);
+                        } else {
+                            Util.showToast(activity, "该名字已存在，请重新输入");
+                            isNameUnique = true;
+                        }
+                    }
+                } else {
+                    Util.showToast(activity, "data error");
+                }
             }
-        });
-        builder.show();
+
+            @Override
+            public void onFailure(Object object) {
+                Util.showToast(activity, object.toString());
+                Util.logHelper(object.toString() + "---failure");
+            }
+        }, Record.class));
     }
 
     private void getRecordId(String name) {
         JSONObject param = new JSONObject();
         try {
-            param.put(APIs.courseId, courseID);
-            param.put(APIs.signName, name);
-            param.put(APIs.sectionLength, sectionLength);
-            param.put(APIs.week, myApplication.getWeek());
-            param.put(APIs.weekday, myApplication.getWeekday());
+            param.put(ConstantValues.courseId, courseID);
+            param.put(ConstantValues.signName, name);
+            param.put(ConstantValues.sectionLength, sectionLength);
+            param.put(ConstantValues.week, myApplication.getWeek());
+            param.put(ConstantValues.weekday, weekday);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        CommonRequest.createJsonPostRequest(APIs.GET_RECORD_ID, param.toString(), new CommomHandler(new CommomListener() {
+        Util.logHelper(param.toString());
+        CommonRequest.createJsonPostRequest(ConstantValues.GET_RECORD_ID, param.toString(), new
+                CommomHandler(new CommomListener() {
 
 
             @Override
             public void onSuccess(Object object) {
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(object));
-                    if (jsonObject.getInt(APIs.status) == 1) {
-                        recordId = jsonObject.getInt(APIs.recordId);
+                    if (jsonObject.getInt(ConstantValues.status) == 1) {
+                        recordId = jsonObject.getInt(ConstantValues.recordId);
                         submitSignResult();
                     }
                 } catch (JSONException e) {
@@ -328,46 +361,47 @@ public class SignActivity extends BaseActivity {
         try {
             for (Student student : recommendStudents) {
                 item = new JSONObject();
-                item.put(APIs.studentId, student.getStudent_id());
-                switch (student.getStatus()){
+                item.put(ConstantValues.studentId, student.getStudent_id());
+                switch (student.getStatus()) {
                     case 0:
-                        item.put(APIs.status, 0);
+                        item.put(ConstantValues.status, 0);
                         break;
                     case 1:
-                        item.put(APIs.status, 2);
+                        item.put(ConstantValues.status, 2);
                         break;
                     case 2:
-                        item.put(APIs.status, 3);
+                        item.put(ConstantValues.status, 3);
                 }
                 array.put(item);
             }
             for (Student student : commomStudents) {
                 item = new JSONObject();
-                item.put(APIs.studentId, student.getStudent_id());
-                switch (student.getStatus()){
+                item.put(ConstantValues.studentId, student.getStudent_id());
+                switch (student.getStatus()) {
                     case 0:
-                        item.put(APIs.status, 0);
+                        item.put(ConstantValues.status, 0);
                         break;
                     case 1:
-                        item.put(APIs.status, 2);
+                        item.put(ConstantValues.status, 2);
                         break;
                     case 2:
-                        item.put(APIs.status, 3);
+                        item.put(ConstantValues.status, 3);
                 }
                 array.put(item);
             }
-            result.put(APIs.ret_recordId, recordId);
-            result.put(APIs.sign_result, array);
+            result.put(ConstantValues.ret_recordId, recordId);
+            result.put(ConstantValues.sign_result, array);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (recordId == 0){
+        if (recordId == 0) {
             return;
         }
         Util.logHelper(result.toString());
 
 
-        CommonRequest.createJsonPostRequest(APIs.POST_SIGN_RESULT, result.toString(), new CommomHandler(new CommomListener() {
+        CommonRequest.createJsonPostRequest(ConstantValues.POST_SIGN_RESULT, result.toString(), new
+                CommomHandler(new CommomListener() {
 
 
             @Override
@@ -375,13 +409,15 @@ public class SignActivity extends BaseActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(object));
-                    if (jsonObject.getInt(APIs.status)==1){
+                    if (jsonObject.getInt(ConstantValues.status) == 1) {
                         Util.showToast(SignActivity.this, "submit success");
-                        Intent intent  = new Intent(SignActivity.this, SignDetailActivity.class);
-                        intent.putExtra(APIs.courseId, courseID);
-                        intent.putExtra(APIs.recordId, recordId);
-                        intent.putExtra(APIs.courseName, course_name);
-                        intent.putExtra(APIs.sectionLength, sectionLength);
+                        Intent intent = new Intent(SignActivity.this, SignDetailActivity.class);
+                        intent.putExtra(ConstantValues.courseId, courseID);
+                        intent.putExtra(ConstantValues.recordId, recordId);
+                        intent.putExtra(ConstantValues.courseName, course_name);
+                        intent.putExtra(ConstantValues.sectionLength, sectionLength);
+                        intent.putExtra(ConstantValues.weekday, weekday);
+                        intent.putExtra("sign_nickname", sign_name);
                         startActivity(intent);
                         finish();
                     }
@@ -392,7 +428,7 @@ public class SignActivity extends BaseActivity {
 
             @Override
             public void onFailure(Object object) {
-                 Util.showToast(SignActivity.this, String.valueOf(object));
+                Util.showToast(SignActivity.this, String.valueOf(object));
             }
         }));
     }
@@ -406,7 +442,7 @@ public class SignActivity extends BaseActivity {
         allStudents.clear();
         recommendStudents.clear();
         commomStudents.clear();
-        url = APIs.GET_STUDENT_IN_COURSE + "?" + APIs.courseID + "=" + courseID;
+        url = ConstantValues.GET_STUDENT_IN_COURSE + "?" + ConstantValues.courseID + "=" + courseID;
         CommonRequest.createGetRequest(url, null, new CommomHandler(new CommomListener() {
 
 
@@ -445,14 +481,16 @@ public class SignActivity extends BaseActivity {
         activity = this;
         signRecords = new ArrayList<>();
         myApplication = (MyApplication) getApplication();
-        courseID = getIntent().getIntExtra(APIs.courseID, -1);
-        course_name = getIntent().getStringExtra(APIs.courseName);
+        Intent intent = getIntent();
+        courseID = intent.getIntExtra(ConstantValues.courseID, -1);
+        course_name = intent.getStringExtra(ConstantValues.courseName);
         courseName.setText(course_name);
-        sectionLength = getIntent().getIntExtra(APIs.sectionLength, 0);
+        sectionLength = intent.getIntExtra(ConstantValues.sectionLength, 0);
         recommendStudents = new ArrayList<Student>();
         commomStudents = new ArrayList<Student>();
         allStudents = new ArrayList<Student>();
         date = Util.getDate(SignActivity.this);
-        desc.setText("创建于"+date);
+        desc.setText("创建于" + date);
+        weekday = intent.getIntExtra(ConstantValues.weekday, -1);
     }
 }

@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Dianming.iml" filepath="$PROJECT_DIR$/Dianming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PushSDK/PushSDK.iml" filepath="$PROJECT_DIR$/PushSDK/PushSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pardom-ActiveAndroid-08c6335/pardom-ActiveAndroid-08c6335.iml" filepath="$PROJECT_DIR$/pardom-ActiveAndroid-08c6335/pardom-ActiveAndroid-08c6335.iml" />
     </modules>
   </component>
 </project>
